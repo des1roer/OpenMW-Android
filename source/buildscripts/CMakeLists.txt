@@ -316,7 +316,8 @@ ExternalProject_Add(ffmpeg
 )
 
 ExternalProject_Add(sdl2
-        URL https://www.libsdl.org/release/SDL2-${SDL2_VERSION}.tar.gz
+        # libsdl.org is unreachable from some networks and hangs; GitHub serves the same tarball.
+        URL https://github.com/libsdl-org/SDL/releases/download/release-${SDL2_VERSION}/SDL2-${SDL2_VERSION}.tar.gz
         URL_HASH ${SDL2_HASH}
         DOWNLOAD_DIR ${download_dir}
 
