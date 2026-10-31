@@ -208,4 +208,8 @@
     <string name="legacy_storage_migration_failed_title">Spielstände nicht verschoben</string>
     <string name="legacy_storage_migration_no_space_message">Deine Spielstände und Einstellungen in\n%1$s\nkonnten nicht verschoben werden, weil %2$s freier Speicher benötigt werden. Der alte Ordner wurde nicht verändert. Gib Speicherplatz frei und starte OpenMW neu, um es erneut zu versuchen.</string>
     <string name="legacy_storage_migration_failed_message">Deine Spielstände und Einstellungen in\n%1$s\nkonnten nicht verschoben werden (%2$s). Der alte Ordner wurde nicht verändert. Starte OpenMW neu, um es erneut zu versuchen.</string>
+    <string name="embedded_game_unpacking_title">Morrowind wird entpackt</string>
+    <string name="embedded_game_unpacking_message">Die mitgelieferten Spieldaten werden entpackt. Das passiert nur einmal und kann einige Minuten dauern.</string>
+    <string name="embedded_game_failed_title">Entpacken fehlgeschlagen</string>
+    <string name="embedded_game_failed_message">Die mitgelieferten Spieldaten konnten nicht entpackt werden: %1$s. Tippe auf Spielen, um es erneut zu versuchen.</string>
 </resources>

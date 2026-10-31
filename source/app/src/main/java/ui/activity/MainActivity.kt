@@ -44,6 +44,7 @@ import com.bugsnag.android.Bugsnag
 import com.libopenmw.openmw.BuildConfig
 import com.libopenmw.openmw.R
 import constants.Constants
+import file.EmbeddedGame
 import file.GameFilesLocation
 import file.GameInstaller
 
@@ -451,6 +452,77 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * Unpacks game data bundled in the APK on first launch and selects it as the game folder.
+     * @return true while unpacking runs; checkStartGame() is called again when it finishes
+     */
+    private fun unpackEmbeddedGameIfNeeded(): Boolean {
+        val entries = EmbeddedGame.readManifest(this) ?: return false
+        val installDir = EmbeddedGame.installDir()
+
+        if (EmbeddedGame.isInstalled(entries)) {
+            // Keep a folder the user picked by hand; fall back to the bundled data otherwise.
+            if (!GameInstaller(prefs.getString("game_files", "")!!).check())
+                selectEmbeddedGame(installDir)
+            return false
+        }
+
+        revealLauncherAfterSkipGui("unpacking bundled game data")
+        launchInProgress = true
+
+        @Suppress("DEPRECATION")
+        val dialog = ProgressDialog(this).apply {
+            setTitle(R.string.embedded_game_unpacking_title)
+            setMessage(getString(R.string.embedded_game_unpacking_message))
+            setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
+            max = 100
+            setCancelable(false)
+            show()
+        }
+
+        Thread {
+            var lastPercent = -1
+            val error = try {
+                EmbeddedGame.install(this, entries) { copied, total ->
+                    val percent = (copied * 100 / total).toInt()
+                    if (percent != lastPercent) {
+                        lastPercent = percent
+                        runOnUiThread { dialog.progress = percent }
+                    }
+                }
+                null
+            } catch (e: IOException) {
+                Log.e(TAG, "Failed to unpack bundled game data", e)
+                e
+            }
+
+            runOnUiThread {
+                dialog.dismiss()
+                launchInProgress = false
+                if (error != null) {
+                    AlertDialog.Builder(this)
+                        .setTitle(R.string.embedded_game_failed_title)
+                        .setMessage(getString(R.string.embedded_game_failed_message, error.message))
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show()
+                } else {
+                    selectEmbeddedGame(installDir)
+                    checkStartGame()
+                }
+            }
+        }.start()
+        return true
+    }
+
+    private fun selectEmbeddedGame(installDir: File) {
+        prefs.edit()
+            .putString(GameFilesLocation.PREF_GAME_FILES, installDir.absolutePath)
+            .remove(GameFilesLocation.PREF_STORAGE_ROOT)
+            .remove(GameFilesLocation.PREF_STORAGE_ID)
+            .putString("pref_encoding", EmbeddedGame.encoding(this, GameInstaller.DEFAULT_CHARSET_PREF))
+            .commit()
+    }
+
+    /**
      * Checks that the game is properly installed and if so, starts the game
      * - the game files must be selected
      * - there must be at least 1 activated mod (user can ignore this warning)
@@ -466,6 +538,9 @@ class MainActivity : AppCompatActivity() {
             revealLauncherAfterSkipGui("legacy storage migration running")
             return
         }
+
+        if (unpackEmbeddedGameIfNeeded())
+            return
 
         // First, check that there are game files present
         val inst = GameInstaller(prefs.getString("game_files", "")!!)

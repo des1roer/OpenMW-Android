@@ -15,3 +15,4 @@ output.json
 .ccls-cache
 app/nightly
 app/mainline
+app/embedded-game

@@ -208,4 +208,8 @@
     <string name="legacy_storage_migration_failed_title">Sparfiler inte flyttade</string>
     <string name="legacy_storage_migration_no_space_message">Dina sparfiler och inställningar i\n%1$s\nkunde inte flyttas eftersom %2$s ledigt utrymme behövs. Den gamla mappen ändrades inte. Frigör utrymme och starta om OpenMW för att försöka igen.</string>
     <string name="legacy_storage_migration_failed_message">Dina sparfiler och inställningar i\n%1$s\nkunde inte flyttas (%2$s). Den gamla mappen ändrades inte. Starta om OpenMW för att försöka igen.</string>
+    <string name="embedded_game_unpacking_title">Packar upp Morrowind</string>
+    <string name="embedded_game_unpacking_message">De medföljande speldata packas upp. Det sker bara en gång och kan ta några minuter.</string>
+    <string name="embedded_game_failed_title">Uppackningen misslyckades</string>
+    <string name="embedded_game_failed_message">De medföljande speldata kunde inte packas upp: %1$s. Tryck på Spela för att försöka igen.</string>
 </resources>

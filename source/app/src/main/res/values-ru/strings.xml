@@ -208,4 +208,8 @@
     <string name="legacy_storage_migration_failed_title">Сохранения не перенесены</string>
     <string name="legacy_storage_migration_no_space_message">Не удалось перенести сохранения и настройки из\n%1$s\nтак как требуется %2$s свободного места. Старая папка не изменена. Освободите место и перезапустите OpenMW, чтобы повторить попытку.</string>
     <string name="legacy_storage_migration_failed_message">Не удалось перенести сохранения и настройки из\n%1$s\n(%2$s). Старая папка не изменена. Перезапустите OpenMW, чтобы повторить попытку.</string>
+    <string name="embedded_game_unpacking_title">Распаковка Morrowind</string>
+    <string name="embedded_game_unpacking_message">Распаковываются встроенные файлы игры. Это происходит один раз и может занять несколько минут.</string>
+    <string name="embedded_game_failed_title">Не удалось распаковать игру</string>
+    <string name="embedded_game_failed_message">Не удалось распаковать встроенные файлы игры: %1$s. Нажмите «Играть», чтобы повторить.</string>
 </resources>

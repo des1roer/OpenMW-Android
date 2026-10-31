@@ -307,4 +307,8 @@ OpenMW by the OpenMW Team since 2008</string>
     <string name="legacy_storage_migration_failed_title">Saves not moved</string>
     <string name="legacy_storage_migration_no_space_message">Your saves and settings in\n%1$s\ncould not be moved because %2$s of free storage is needed. The old folder was not changed. Free some storage and restart OpenMW to try again.</string>
     <string name="legacy_storage_migration_failed_message">Your saves and settings in\n%1$s\ncould not be moved (%2$s). The old folder was not changed. Restart OpenMW to try again.</string>
+    <string name="embedded_game_unpacking_title">Unpacking Morrowind</string>
+    <string name="embedded_game_unpacking_message">The game data bundled with this app is being unpacked. This happens only once and may take a few minutes.</string>
+    <string name="embedded_game_failed_title">Unpacking failed</string>
+    <string name="embedded_game_failed_message">The bundled game data could not be unpacked: %1$s. Tap Play to try again.</string>
 </resources>

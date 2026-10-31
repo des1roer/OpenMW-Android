@@ -731,6 +731,8 @@ android {
             // Handheld mode scripts. Kept outside src/main/assets, which is generated and ignored.
             assets {
                 srcDir "src/main/handheld-assets"
+                // Optional game data, produced by tools/stage-embedded-game.sh.
+                srcDir "embedded-game"
             }
 
             // Do not merge the generated upstream OMWFX VFS overlay.
@@ -759,6 +761,12 @@ android {
         buildConfig true
     }
 
+    androidResources {
+        // The default pattern drops "_*" directories and dotfiles; Morrowind data has
+        // directories such as Sound/Cr/_OLD that must be packaged as-is.
+        ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~'
+    }
+
     lint {
         checkReleaseBuilds false
     }
@@ -772,9 +780,30 @@ android {
         jvmTarget = '17'
     }
 
+    // Release key committed in signing/ so every build of this fork updates the installed app.
+    def releaseSigning = new Properties()
+    def releaseSigningFile = rootProject.file('signing/release.properties')
+    if (releaseSigningFile.isFile()) {
+        releaseSigningFile.withInputStream { releaseSigning.load(it) }
+    }
+
+    signingConfigs {
+        release {
+            if (releaseSigning.storeFile) {
+                storeFile rootProject.file(releaseSigning.storeFile)
+                storePassword releaseSigning.storePassword
+                keyAlias releaseSigning.keyAlias
+                keyPassword releaseSigning.keyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            if (releaseSigning.storeFile) {
+                signingConfig signingConfigs.release
+            }
         }
 
         debug {
@@ -793,7 +822,9 @@ android {
     productFlavors {
         mainline {
             dimension "platform"
-            targetSdk 29
+            // Play Protect blocks sideloaded APKs targeting old SDKs. Bundled game data
+            // lives in app-specific storage, so legacy storage access is not required.
+            targetSdk 35
             buildConfigField "boolean", "IS_AUTOMOTIVE_BUILD", "false"
         }
 

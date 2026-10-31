@@ -208,4 +208,8 @@
     <string name="legacy_storage_migration_failed_title">Sauvegardes non déplacées</string>
     <string name="legacy_storage_migration_no_space_message">Vos sauvegardes et paramètres dans\n%1$s\nn\'ont pas pu être déplacés, car %2$s d\'espace libre sont nécessaires. L\'ancien dossier n\'a pas été modifié. Libérez de l\'espace et redémarrez OpenMW pour réessayer.</string>
     <string name="legacy_storage_migration_failed_message">Vos sauvegardes et paramètres dans\n%1$s\nn\'ont pas pu être déplacés (%2$s). L\'ancien dossier n\'a pas été modifié. Redémarrez OpenMW pour réessayer.</string>
+    <string name="embedded_game_unpacking_title">Décompression de Morrowind</string>
+    <string name="embedded_game_unpacking_message">Les données du jeu incluses sont en cours de décompression. Cela n’arrive qu’une fois et peut prendre quelques minutes.</string>
+    <string name="embedded_game_failed_title">Échec de la décompression</string>
+    <string name="embedded_game_failed_message">Les données du jeu incluses n’ont pas pu être décompressées : %1$s. Appuyez sur Jouer pour réessayer.</string>
 </resources>
