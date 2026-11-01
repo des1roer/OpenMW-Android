@@ -6,6 +6,10 @@ local.properties
 *.iml
 obj
 assets
+# ...except our own Lua content, fetched native assets are excluded by the rule above.
+!app/src/main/assets/
+app/src/main/assets/*
+!app/src/main/assets/cheats/
 .gdb_history
 app/wrap
 fabric.properties
