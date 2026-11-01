@@ -10,3 +10,4 @@ giveGold: "Give gold"
 giveGoldDescription: "Turning this on adds the amount above to your inventory, then turns itself back off."
 
 goldAdded: "+{amount} gold"
+cheatError: "Cheats: {error}"

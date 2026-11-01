@@ -13,7 +13,10 @@ object CheatsController {
     private const val TAG = "CheatsController"
     const val CONTENT_FILE = "cheats.omwscripts"
     private const val ASSET_ROOT = "cheats"
-    private const val SCRIPTS = """MENU,PLAYER: scripts/cheats/settings.lua
+    // PLAYER only: I.Settings.registerGroup() errors if the same key is registered twice, and
+    // the MENU and PLAYER instances of a MENU,PLAYER script both run and both call it, which
+    // duplicated the "Cheats" page in Settings. Nothing here is needed before a save is loaded.
+    private const val SCRIPTS = """PLAYER: scripts/cheats/settings.lua
 PLAYER: scripts/cheats/player.lua
 GLOBAL: scripts/cheats/global.lua
 """

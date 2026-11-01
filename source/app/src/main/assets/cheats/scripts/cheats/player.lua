@@ -16,14 +16,31 @@ local function giveGold()
 
     -- Events only carry plain GameObject references, not the openmw.self proxy.
     core.sendGlobalEvent('OMWCheatsAddGold', { actor = self.object, amount = amount })
-    ui.showMessage(l10n('goldAdded', { amount = tostring(amount) }))
 end
 
 settings:subscribe(async:callback(function(_, key)
-    if key == 'giveGold' and settings:get('giveGold') then
-        -- Reset first: moveInto() in the global handler runs on the next frame,
-        -- so a second tap before then must not be ignored as "no change".
-        settings:set('giveGold', false)
-        giveGold()
+    if key ~= 'giveGold' or not settings:get('giveGold') then
+        return
+    end
+    -- Reset first: the global handler runs on the next frame, so a second tap
+    -- before its reply arrives must not be ignored as "no change".
+    settings:set('giveGold', false)
+
+    local ok, err = pcall(giveGold)
+    if not ok then
+        ui.showMessage(l10n('cheatError', { error = tostring(err) }))
     end
 end))
+
+return {
+    eventHandlers = {
+        -- Sent by scripts/cheats/global.lua once the gold has actually been added.
+        OMWCheatsGoldResult = function(data)
+            if data.ok then
+                ui.showMessage(l10n('goldAdded', { amount = tostring(data.amount) }))
+            else
+                ui.showMessage(l10n('cheatError', { error = tostring(data.error) }))
+            end
+        end,
+    },
+}
