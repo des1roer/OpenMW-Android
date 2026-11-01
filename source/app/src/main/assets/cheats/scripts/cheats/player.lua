@@ -14,7 +14,8 @@ local function giveGold()
     local amount = math.floor(tonumber(settings:get('amount')) or 0)
     amount = math.max(MIN_AMOUNT, math.min(amount, MAX_AMOUNT))
 
-    core.sendGlobalEvent('OMWCheatsAddGold', { actor = self, amount = amount })
+    -- Events only carry plain GameObject references, not the openmw.self proxy.
+    core.sendGlobalEvent('OMWCheatsAddGold', { actor = self.object, amount = amount })
     ui.showMessage(l10n('goldAdded', { amount = tostring(amount) }))
 end
 

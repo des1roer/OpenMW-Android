@@ -12,7 +12,9 @@ I.Settings.registerGroup({
     page = 'OMWCheats',
     l10n = 'OMWCheats',
     name = 'Group',
-    permanentStorage = false,
+    -- MENU-context scripts (page visible before a save is loaded) only allow
+    -- permanentStorage = true; this script runs as both MENU and PLAYER.
+    permanentStorage = true,
     settings = {
         {
             key = 'amount',
